@@ -1,40 +1,34 @@
 <script>
-import TaskTracker from "./subcomponents/TaskTracker.vue"
+    // TODO: Import & Register the TaskTracker component 
+    import taskTracker from './subcomponents/TaskTracker.vue'
+
     export default {
         data() {
             return {
+                show: false,
                 desc: '',
                 deadline: '',
                 taskList: []
             }
         },
-        components: {
-            TaskTracker
-        },
-
+        components: {taskTracker}, 
         methods: {
             add() {
                 this.taskList.push( { 'desc': this.desc, 'deadline': this.deadline } )
                 this.desc = ''
                 this.deadline = ''
-                console.log(this.taskList); 
-                
             },
             // TODO: Add a new method, to delete a task completed
-
-            deleteTask(idx){
-                this.taskList.splice(idx,1) 
+            deleteTask(idx) {
+                this.taskList.splice(idx,1)
             }
-            
         }
-        
     }
-
-    
 
 </script>
 
 <template>
+
     <div class="mb-3">
         <label for="desc" class="form-label">Task</label>
         <input type="text" class="form-control" id="desc" v-model='desc' placeholder="task">
@@ -47,11 +41,13 @@ import TaskTracker from "./subcomponents/TaskTracker.vue"
     <button type="button" @click="add" class="btn btn-primary">Add New Task</button>
     <hr>
 
-    <!-- TODO: Modify following code -->
-    <task-tracker v-for="(task,idx) in taskList" :idx="idx" :task="task" @remove-task="deleteTask"></task-tracker>
+    <task-tracker 
+    v-for='(task, idx) in taskList' 
+        v-bind:key='idx' 
+        v-bind:task='task' 
+        v-bind:idx='idx'
+        v-on:delete='deleteTask'
+    ></task-tracker>
 
 </template>
 
-<style scoped>
-   
-</style>
